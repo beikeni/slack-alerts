@@ -39,15 +39,17 @@ class Alert extends BaseAlert {
   }) {
     // Top Level Blocks
     const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const topLevelBlocks = mentionsBlock ? [mentionsBlock] : undefined;
+    const contextBlock = this.makeContextBlock({ context: this.context });
+    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+      (block) => block !== null
+    );
 
     // Attachment Blocks
     const textBlock = this.makeTextBlock({
       text: `*INFO* : *${serviceName}* - ${text}`,
     });
     const payloadBlock = this.makePayloadBlock({ payload });
-    const contextBlock = this.makeContextBlock({ context: this.context });
-    const attachmentBlocks = [contextBlock, textBlock, payloadBlock].filter(
+    const attachmentBlocks = [textBlock, payloadBlock].filter(
       (block) => block !== null
     );
     const attachment = this.makeAttachment({
@@ -76,15 +78,17 @@ class Alert extends BaseAlert {
   }) {
     // Top Level Blocks
     const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const topLevelBlocks = mentionsBlock ? [mentionsBlock] : undefined;
+    const contextBlock = this.makeContextBlock({ context: this.context });
+    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+      (block) => block !== null
+    );
 
     // Attachment Blocks
     const textBlock = this.makeTextBlock({
       text: `*WARNING*: *${serviceName}* - ${text}`,
     });
     const payloadBlock = this.makePayloadBlock({ payload });
-    const contextBlock = this.makeContextBlock({ context: this.context });
-    const attachmentBlocks = [contextBlock, textBlock, payloadBlock].filter(
+    const attachmentBlocks = [textBlock, payloadBlock].filter(
       (block) => block !== null
     );
     const attachment = this.makeAttachment({
@@ -110,12 +114,15 @@ class Alert extends BaseAlert {
     text: string;
     serviceName: string;
     stackTrace?: string;
-    payload?: Record<string, unknown> | string ;
+    payload?: Record<string, unknown> | string;
     mentions?: string[];
   }) {
     // Top Level Blocks
     const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const topLevelBlocks = mentionsBlock ? [mentionsBlock] : undefined;
+    const contextBlock = this.makeContextBlock({ context: this.context });
+    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+      (block) => block !== null
+    );
 
     // Attachment Blocks
     const stackTraceBlock = this.makeCodeblock({ text: stackTrace });
@@ -125,14 +132,9 @@ class Alert extends BaseAlert {
       text: `*ERROR*: *${serviceName}* - ${text}`,
     });
 
-    const contextBlock = this.makeContextBlock({ context: this.context });
-
-    const attachmentBlocks = [
-      contextBlock,
-      textBlock,
-      stackTraceBlock,
-      payloadBlock,
-    ].filter((block) => block !== null);
+    const attachmentBlocks = [textBlock, stackTraceBlock, payloadBlock].filter(
+      (block) => block !== null
+    );
 
     const attachment = this.makeAttachment({
       color: this.getColor({ alertLevel: "error" }),
@@ -170,7 +172,10 @@ class Alert extends BaseAlert {
     }
     // Top Level Blocks
     const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const topLevelBlocks = mentionsBlock ? [mentionsBlock] : undefined;
+    const contextBlock = this.makeContextBlock({ context: this.context });
+    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+      (block) => block !== null
+    );
 
     // Attachment Blocks
     const textBlock = this.makeTextBlock({
@@ -178,8 +183,7 @@ class Alert extends BaseAlert {
     });
     const rows = items.map(rowMapper);
     const table = this.makeTableBlock(headers, rows);
-    const contextBlock = this.makeContextBlock({ context: this.context });
-    const attachmentBlocks = [contextBlock, textBlock, table].filter(
+    const attachmentBlocks = [textBlock, table].filter(
       (block) => block !== null
     );
     const attachment = this.makeAttachment({
