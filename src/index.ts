@@ -147,7 +147,7 @@ class Alert extends BaseAlert implements IAlert {
     serviceName,
     alertLevel = "info",
     mentions,
-  }: ITableOptions) {
+  }: ITableOptions<T>) {
     if (items.length === 0) {
       await this.info({ text: "No items to process", serviceName });
       return;
