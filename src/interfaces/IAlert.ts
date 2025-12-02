@@ -24,7 +24,7 @@ export interface ITableOptions extends IBaseAlertOptions {
   headers: string[];
   items: Record<string, unknown>[];
   rowMapper: (item: Record<string, unknown>) => string[];
-  alertLevel: "error" | "warning" | "info";
+  alertLevel?: "error" | "warning" | "info";
 }
 
 export interface IAlert {
