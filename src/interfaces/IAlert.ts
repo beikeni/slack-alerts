@@ -20,7 +20,6 @@ export type IErrorOptions = IBaseAlertOptions & {
 };
 
 export type ITableOptions<T> = IBaseAlertOptions & {
-  title: string;
   headers: string[];
   items: T[];
   rowMapper: (item: T) => string[];

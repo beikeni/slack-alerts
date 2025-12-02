@@ -140,7 +140,7 @@ class Alert extends BaseAlert implements IAlert {
 
   // #region Table
   public async table<T>({
-    title,
+    text,
     headers,
     items,
     rowMapper,
@@ -161,7 +161,7 @@ class Alert extends BaseAlert implements IAlert {
 
     // Attachment Blocks
     const textBlock = this.makeTextBlock({
-      text: `*${alertLevel.toUpperCase()}*: *${serviceName}* - ${title}`,
+      text: `*${alertLevel.toUpperCase()}*: *${serviceName}* - ${text}`,
     });
     const rows = items.map(rowMapper);
     const table = this.makeTableBlock(headers, rows);
@@ -175,7 +175,7 @@ class Alert extends BaseAlert implements IAlert {
 
     await this.sendToSlack({
       attachments: [attachment],
-      textOnNotification: title,
+      textOnNotification: text,
       blocks: topLevelBlocks,
     });
   }
