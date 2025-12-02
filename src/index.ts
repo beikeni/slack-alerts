@@ -11,17 +11,21 @@ dotenv.config();
 class Alert extends BaseAlert implements IAlert {
   protected readonly context: IContextItem[] = [];
   public addContext(context: IContextItem | IContextItem[]) {
-    const items = Array.isArray(context) ? context : [context];
-    for (const item of items) {
-      if (
-        item.value &&
-        !this.context.some(
-          (existing) =>
-            existing.key === item.key && existing.value === item.value
-        )
-      ) {
-        this.context.push(item);
+    try {
+      const items = Array.isArray(context) ? context : [context];
+      for (const item of items) {
+        if (
+          item.value &&
+          !this.context.some(
+            (existing) =>
+              existing.key === item.key && existing.value === item.value
+          )
+        ) {
+          this.context.push(item);
+        }
       }
+    } catch (error) {
+      console.error("Error adding context", error);
     }
   }
 
@@ -32,31 +36,35 @@ class Alert extends BaseAlert implements IAlert {
     payload,
     mentions,
   }: IBaseAlertOptions) {
-    // Top Level Blocks
-    const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const contextBlock = this.makeContextBlock({ context: this.context });
-    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
-      (block) => block !== null
-    );
+    try {
+      // Top Level Blocks
+      const mentionsBlock = await this.makeMentionsBlock({ mentions });
+      const contextBlock = this.makeContextBlock({ context: this.context });
+      const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+        (block) => block !== null
+      );
 
-    // Attachment Blocks
-    const textBlock = this.makeTextBlock({
-      text: `*INFO* : *${serviceName}* - ${text}`,
-    });
-    const payloadBlock = this.makePayloadBlock({ payload });
-    const attachmentBlocks = [textBlock, payloadBlock].filter(
-      (block) => block !== null
-    );
-    const attachment = this.makeAttachment({
-      color: this.getColor({ alertLevel: "info" }),
-      blocks: attachmentBlocks,
-    });
+      // Attachment Blocks
+      const textBlock = this.makeTextBlock({
+        text: `*INFO* : *${serviceName}* - ${text}`,
+      });
+      const payloadBlock = this.makePayloadBlock({ payload });
+      const attachmentBlocks = [textBlock, payloadBlock].filter(
+        (block) => block !== null
+      );
+      const attachment = this.makeAttachment({
+        color: this.getColor({ alertLevel: "info" }),
+        blocks: attachmentBlocks,
+      });
 
-    await this.sendToSlack({
-      attachments: [attachment],
-      textOnNotification: text,
-      blocks: topLevelBlocks,
-    });
+      await this.sendToSlack({
+        attachments: [attachment],
+        textOnNotification: text,
+        blocks: topLevelBlocks,
+      });
+    } catch (error) {
+      console.error("Error sending info alert", error);
+    }
   }
 
   // #region Warning
@@ -66,31 +74,35 @@ class Alert extends BaseAlert implements IAlert {
     payload,
     mentions,
   }: IBaseAlertOptions) {
-    // Top Level Blocks
-    const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const contextBlock = this.makeContextBlock({ context: this.context });
-    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
-      (block) => block !== null
-    );
+    try {
+      // Top Level Blocks
+      const mentionsBlock = await this.makeMentionsBlock({ mentions });
+      const contextBlock = this.makeContextBlock({ context: this.context });
+      const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+        (block) => block !== null
+      );
 
-    // Attachment Blocks
-    const textBlock = this.makeTextBlock({
-      text: `*WARNING*: *${serviceName}* - ${text}`,
-    });
-    const payloadBlock = this.makePayloadBlock({ payload });
-    const attachmentBlocks = [textBlock, payloadBlock].filter(
-      (block) => block !== null
-    );
-    const attachment = this.makeAttachment({
-      color: this.getColor({ alertLevel: "warning" }),
-      blocks: attachmentBlocks,
-    });
+      // Attachment Blocks
+      const textBlock = this.makeTextBlock({
+        text: `*WARNING*: *${serviceName}* - ${text}`,
+      });
+      const payloadBlock = this.makePayloadBlock({ payload });
+      const attachmentBlocks = [textBlock, payloadBlock].filter(
+        (block) => block !== null
+      );
+      const attachment = this.makeAttachment({
+        color: this.getColor({ alertLevel: "warning" }),
+        blocks: attachmentBlocks,
+      });
 
-    await this.sendToSlack({
-      attachments: [attachment],
-      textOnNotification: text,
-      blocks: topLevelBlocks,
-    });
+      await this.sendToSlack({
+        attachments: [attachment],
+        textOnNotification: text,
+        blocks: topLevelBlocks,
+      });
+    } catch (error) {
+      console.error("Error sending warning alert", error);
+    }
   }
 
   // #region Error
@@ -107,35 +119,41 @@ class Alert extends BaseAlert implements IAlert {
     payload?: Record<string, unknown> | string;
     mentions?: string[];
   }) {
-    // Top Level Blocks
-    const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const contextBlock = this.makeContextBlock({ context: this.context });
-    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
-      (block) => block !== null
-    );
+    try {
+      // Top Level Blocks
+      const mentionsBlock = await this.makeMentionsBlock({ mentions });
+      const contextBlock = this.makeContextBlock({ context: this.context });
+      const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+        (block) => block !== null
+      );
 
-    // Attachment Blocks
-    const stackTraceBlock = this.makeCodeblock({ text: stackTrace });
-    const payloadBlock = this.makePayloadBlock({ payload });
+      // Attachment Blocks
+      const stackTraceBlock = this.makeCodeblock({ text: stackTrace });
+      const payloadBlock = this.makePayloadBlock({ payload });
 
-    const textBlock = this.makeTextBlock({
-      text: `*ERROR*: *${serviceName}* - ${text}`,
-    });
+      const textBlock = this.makeTextBlock({
+        text: `*ERROR*: *${serviceName}* - ${text}`,
+      });
 
-    const attachmentBlocks = [textBlock, stackTraceBlock, payloadBlock].filter(
-      (block) => block !== null
-    );
+      const attachmentBlocks = [
+        textBlock,
+        stackTraceBlock,
+        payloadBlock,
+      ].filter((block) => block !== null);
 
-    const attachment = this.makeAttachment({
-      color: this.getColor({ alertLevel: "error" }),
-      blocks: attachmentBlocks,
-    });
+      const attachment = this.makeAttachment({
+        color: this.getColor({ alertLevel: "error" }),
+        blocks: attachmentBlocks,
+      });
 
-    await this.sendToSlack({
-      attachments: [attachment],
-      textOnNotification: text,
-      blocks: topLevelBlocks,
-    });
+      await this.sendToSlack({
+        attachments: [attachment],
+        textOnNotification: text,
+        blocks: topLevelBlocks,
+      });
+    } catch (error) {
+      console.error("Error sending error alert", error);
+    }
   }
 
   // #region Table
@@ -148,36 +166,40 @@ class Alert extends BaseAlert implements IAlert {
     alertLevel = "info",
     mentions,
   }: ITableOptions<T>) {
-    if (items.length === 0) {
-      await this.info({ text: "No items to process", serviceName });
-      return;
+    try {
+      if (items.length === 0) {
+        await this.info({ text: "No items to process", serviceName });
+        return;
+      }
+      // Top Level Blocks
+      const mentionsBlock = await this.makeMentionsBlock({ mentions });
+      const contextBlock = this.makeContextBlock({ context: this.context });
+      const topLevelBlocks = [mentionsBlock, contextBlock].filter(
+        (block) => block !== null
+      );
+
+      // Attachment Blocks
+      const textBlock = this.makeTextBlock({
+        text: `*${alertLevel.toUpperCase()}*: *${serviceName}* - ${text}`,
+      });
+      const rows = items.map(rowMapper);
+      const table = this.makeTableBlock(headers, rows);
+      const attachmentBlocks = [textBlock, table].filter(
+        (block) => block !== null
+      );
+      const attachment = this.makeAttachment({
+        color: this.getColor({ alertLevel }),
+        blocks: attachmentBlocks,
+      });
+
+      await this.sendToSlack({
+        attachments: [attachment],
+        textOnNotification: text,
+        blocks: topLevelBlocks,
+      });
+    } catch (error) {
+      console.error("Error sending table alert", error);
     }
-    // Top Level Blocks
-    const mentionsBlock = await this.makeMentionsBlock({ mentions });
-    const contextBlock = this.makeContextBlock({ context: this.context });
-    const topLevelBlocks = [mentionsBlock, contextBlock].filter(
-      (block) => block !== null
-    );
-
-    // Attachment Blocks
-    const textBlock = this.makeTextBlock({
-      text: `*${alertLevel.toUpperCase()}*: *${serviceName}* - ${text}`,
-    });
-    const rows = items.map(rowMapper);
-    const table = this.makeTableBlock(headers, rows);
-    const attachmentBlocks = [textBlock, table].filter(
-      (block) => block !== null
-    );
-    const attachment = this.makeAttachment({
-      color: this.getColor({ alertLevel }),
-      blocks: attachmentBlocks,
-    });
-
-    await this.sendToSlack({
-      attachments: [attachment],
-      textOnNotification: text,
-      blocks: topLevelBlocks,
-    });
   }
 }
 

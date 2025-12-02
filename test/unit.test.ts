@@ -26,7 +26,7 @@ describe("Info alert test", () => {
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "test",
     });
@@ -64,7 +64,7 @@ describe("Info alert test", () => {
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "Info with payload",
     });
@@ -99,7 +99,7 @@ describe("Error alert test", () => {
           color: "#B22222",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "Something went wrong",
     });
@@ -128,7 +128,7 @@ describe("Error alert test", () => {
           color: "#B22222",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "This is a warning",
     });
@@ -166,7 +166,7 @@ describe("Error alert test", () => {
           color: "#B22222",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "Error with stack",
     });
@@ -204,7 +204,7 @@ describe("Error alert test", () => {
           color: "#B22222",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "Error with payload",
     });
@@ -255,7 +255,7 @@ describe("Error alert test", () => {
           color: "#B22222",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "Error with both",
     });
@@ -277,7 +277,7 @@ describe("Table alert test", () => {
     ];
 
     await alert.table({
-      title: "Test Table",
+      text: "Test Table",
       headers: ["Name", "Value"],
       items,
       rowMapper: (item) => [item.name, item.value.toString()],
@@ -369,7 +369,7 @@ describe("Table alert test", () => {
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "Test Table",
     });
@@ -380,7 +380,7 @@ describe("Table alert test", () => {
     alert.setOptions({ token: "test", channelId: "test" });
 
     await alert.table({
-      title: "Empty Table",
+      text: "Empty Table",
       headers: ["Name", "Value"],
       items: [],
       rowMapper: (item: any) => [item.name, item.value],
@@ -403,7 +403,7 @@ describe("Table alert test", () => {
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "No items to process",
     });
@@ -416,7 +416,7 @@ describe("Table alert test", () => {
     const items = [{ id: "1" }];
 
     await alert.table({
-      title: "Danger Table",
+      text: "Danger Table",
       headers: ["ID"],
       items,
       rowMapper: (item) => [item.id],
@@ -466,7 +466,7 @@ describe("Table alert test", () => {
           color: "#B22222",
         },
       ],
-      blocks: undefined,
+      blocks: [],
       channel: "test",
       text: "Danger Table",
     });
@@ -666,11 +666,11 @@ describe("Context feature test", () => {
     expect(alert.mockPostMessage).toHaveBeenCalledWith({
       attachments: [
         {
-          blocks: [expectedContextBlock, expectedTextBlock],
+          blocks: [expectedTextBlock],
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [expectedContextBlock],
       channel: "test",
       text: "test with context",
     });
@@ -709,11 +709,11 @@ describe("Context feature test", () => {
     expect(alert.mockPostMessage).toHaveBeenCalledWith({
       attachments: [
         {
-          blocks: [expectedContextBlock, expectedTextBlock],
+          blocks: [expectedTextBlock],
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [expectedContextBlock],
       channel: "test",
       text: "test with multiple context",
     });
@@ -742,11 +742,11 @@ describe("Context feature test", () => {
     expect(alert.mockPostMessage).toHaveBeenCalledWith({
       attachments: [
         {
-          blocks: [expectedContextBlock, expectedTextBlock],
+          blocks: [expectedTextBlock],
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [expectedContextBlock],
       channel: "test",
       text: "test",
     });
@@ -777,11 +777,11 @@ describe("Context feature test", () => {
     expect(alert.mockPostMessage).toHaveBeenCalledWith({
       attachments: [
         {
-          blocks: [expectedContextBlock, expectedTextBlock],
+          blocks: [expectedTextBlock],
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [expectedContextBlock],
       channel: "test",
       text: "test",
     });
@@ -809,11 +809,11 @@ describe("Context feature test", () => {
     expect(alert.mockPostMessage).toHaveBeenCalledWith({
       attachments: [
         {
-          blocks: [expectedContextBlock, expectedTextBlock],
+          blocks: [expectedTextBlock],
           color: "#3b76ff",
         },
       ],
-      blocks: undefined,
+      blocks: [expectedContextBlock],
       channel: "test",
       text: "test",
     });
