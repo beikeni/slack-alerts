@@ -5,7 +5,7 @@ import type {
   RichTextBlock,
 } from "@slack/web-api";
 import { CoreAlert } from "./core.js";
-import type { ContextItem } from "./interfaces/context-item.js";
+import type { IContextItem, IOptions } from "./interfaces/IAlert.js";
 
 export class BaseAlert extends CoreAlert {
   protected getColor({
@@ -38,7 +38,7 @@ export class BaseAlert extends CoreAlert {
         return "🔍";
     }
   }
-  protected makeContextBlock({ context }: { context: ContextItem[] }) {
+  protected makeContextBlock({ context }: { context: IContextItem[] }) {
     return context.length > 0
       ? {
           type: "context",

@@ -1,16 +1,16 @@
 import dotenv from "dotenv";
-import type { ContextItem } from "./interfaces/context-item.js";
 import { BaseAlert } from "./base.js";
+import type {
+  IAlert,
+  IBaseAlertOptions,
+  IContextItem,
+  ITableOptions,
+} from "./interfaces/IAlert.js";
 dotenv.config();
 
-/**
- * Keep track of scopes:
- * read:users for mentions
- * chat:write for posting messages
- */
-class Alert extends BaseAlert {
-  protected readonly context: ContextItem[] = [];
-  public addContext(context: ContextItem | ContextItem[]) {
+class Alert extends BaseAlert implements IAlert {
+  protected readonly context: IContextItem[] = [];
+  public addContext(context: IContextItem | IContextItem[]) {
     const items = Array.isArray(context) ? context : [context];
     for (const item of items) {
       if (
@@ -31,12 +31,7 @@ class Alert extends BaseAlert {
     serviceName,
     payload,
     mentions,
-  }: {
-    text: string;
-    serviceName: string;
-    payload?: any | string | Record<string, unknown>;
-    mentions?: string[];
-  }) {
+  }: IBaseAlertOptions) {
     // Top Level Blocks
     const mentionsBlock = await this.makeMentionsBlock({ mentions });
     const contextBlock = this.makeContextBlock({ context: this.context });
@@ -70,12 +65,7 @@ class Alert extends BaseAlert {
     serviceName,
     payload,
     mentions,
-  }: {
-    text: string;
-    serviceName: string;
-    payload?: Record<string, unknown>;
-    mentions?: string[];
-  }) {
+  }: IBaseAlertOptions) {
     // Top Level Blocks
     const mentionsBlock = await this.makeMentionsBlock({ mentions });
     const contextBlock = this.makeContextBlock({ context: this.context });
@@ -157,15 +147,7 @@ class Alert extends BaseAlert {
     serviceName,
     alertLevel = "info",
     mentions,
-  }: {
-    title: string;
-    headers: string[];
-    items: T[];
-    rowMapper: (item: T) => string[];
-    serviceName: string;
-    alertLevel: "error" | "warning" | "info";
-    mentions?: string[];
-  }) {
+  }: ITableOptions) {
     if (items.length === 0) {
       await this.info({ text: "No items to process", serviceName });
       return;
