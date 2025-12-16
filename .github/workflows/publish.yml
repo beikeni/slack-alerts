@@ -38,4 +38,4 @@ jobs:
       - name: Build
         run: pnpm build
       - name: Publish
-        run: pnpm publish --no-git-checks --access public
+        run: pnpm publish
