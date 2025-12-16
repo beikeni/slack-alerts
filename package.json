@@ -1,6 +1,6 @@
 {
   "name": "slack-alerts",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "A slack API wrapper for sending alerts",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

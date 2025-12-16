@@ -76,6 +76,10 @@ export class CoreAlert {
           blocks,
         });
       }
+      console.error("Failed to send message to Slack", err);
+      console.log(JSON.stringify(attachments, null, 2));
+      console.log(JSON.stringify(textOnNotification, null, 2));
+      console.log(JSON.stringify(blocks, null, 2));
     }
   }
 }

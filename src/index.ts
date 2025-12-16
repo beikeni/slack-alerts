@@ -148,7 +148,7 @@ class Alert extends BaseAlert implements IAlert {
 
       await this.sendToSlack({
         attachments: [attachment],
-        textOnNotification: text,
+        textOnNotification: "An error occurred",
         blocks: topLevelBlocks,
       });
     } catch (error) {
