@@ -28,7 +28,7 @@ describe("Info alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "test",
+      text: "info",
     });
   });
 
@@ -66,7 +66,7 @@ describe("Info alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "Info with payload",
+      text: "info",
     });
   });
 });
@@ -101,7 +101,7 @@ describe("Error alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "Something went wrong",
+      text: "An error occurred",
     });
   });
 
@@ -130,7 +130,7 @@ describe("Error alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "This is a warning",
+      text: "An error occurred",
     });
   });
 
@@ -168,7 +168,7 @@ describe("Error alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "Error with stack",
+      text: "An error occurred",
     });
   });
 
@@ -206,7 +206,7 @@ describe("Error alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "Error with payload",
+      text: "An error occurred",
     });
   });
 
@@ -257,7 +257,7 @@ describe("Error alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "Error with both",
+      text: "An error occurred",
     });
   });
 });
@@ -405,7 +405,7 @@ describe("Table alert test", () => {
       ],
       blocks: [],
       channel: "test",
-      text: "No items to process",
+      text: "info",
     });
   });
 
@@ -525,7 +525,7 @@ describe("Mention feature test", () => {
       ],
       blocks: [expectedMentionsBlock],
       channel: "test-channel",
-      text: "Test message with mention",
+      text: "info",
     });
   });
 
@@ -580,7 +580,7 @@ describe("Mention feature test", () => {
       ],
       blocks: [expectedMentionsBlock],
       channel: "test-channel",
-      text: "Alert for multiple users",
+      text: "info",
     });
   });
 
@@ -628,7 +628,7 @@ describe("Mention feature test", () => {
       ],
       blocks: [expectedMentionsBlock],
       channel: "test-channel",
-      text: "Critical error occurred",
+      text: "An error occurred",
     });
   });
 });
@@ -672,7 +672,7 @@ describe("Context feature test", () => {
       ],
       blocks: [expectedContextBlock],
       channel: "test",
-      text: "test with context",
+      text: "info",
     });
   });
 
@@ -715,7 +715,7 @@ describe("Context feature test", () => {
       ],
       blocks: [expectedContextBlock],
       channel: "test",
-      text: "test with multiple context",
+      text: "info",
     });
   });
 
@@ -748,7 +748,7 @@ describe("Context feature test", () => {
       ],
       blocks: [expectedContextBlock],
       channel: "test",
-      text: "test",
+      text: "info",
     });
   });
 
@@ -783,7 +783,7 @@ describe("Context feature test", () => {
       ],
       blocks: [expectedContextBlock],
       channel: "test",
-      text: "test",
+      text: "info",
     });
   });
 
@@ -815,7 +815,7 @@ describe("Context feature test", () => {
       ],
       blocks: [expectedContextBlock],
       channel: "test",
-      text: "test",
+      text: "info",
     });
   });
 });

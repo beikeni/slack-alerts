@@ -59,7 +59,7 @@ class Alert extends BaseAlert implements IAlert {
 
       await this.sendToSlack({
         attachments: [attachment],
-        textOnNotification: text,
+        textOnNotification: "info",
         blocks: topLevelBlocks,
       });
     } catch (error) {
@@ -97,7 +97,7 @@ class Alert extends BaseAlert implements IAlert {
 
       await this.sendToSlack({
         attachments: [attachment],
-        textOnNotification: text,
+        textOnNotification: "warning",
         blocks: topLevelBlocks,
       });
     } catch (error) {
